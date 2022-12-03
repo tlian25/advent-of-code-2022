@@ -1,13 +1,7 @@
 # Day 2: Rock Paper Scissors
 # https://adventofcode.com/2022/day/2
 
-
-def readfile():
-    with open("input/day02_input.txt") as f:
-        lines = f.readlines()
-    return lines
-
-
+from util.input_util import read_input_file
 
 # CONSTANTS
 LOST = 0
@@ -45,15 +39,15 @@ def score(op, you):
 
 def solution1():
     
-    lines = readfile()
+    lines = read_input_file(2)
     
     total = 0
     for l in lines:
-        op, you = l.replace('\n','').split(' ')
+        op, you = l.split(' ')
         op = convert(op)
         s = score(op, you)
         total += s
-        print(op, you, s)
+        #print(op, you, s)
         
     return total
 
@@ -82,9 +76,9 @@ def solution2():
     
     total = 0
     
-    lines = readfile()
+    lines = read_input_file(2)
     for l in lines:
-        op, strat = l.replace('\n', '').split(' ')
+        op, strat = l.split(' ')
         op = convert(op)
         strategy = strategy_mapping[strat]
         
@@ -104,4 +98,7 @@ def solution2():
 
 if __name__ == '__main__':
     print(solution1())
+
+    print('---------')
+    
     print(solution2())

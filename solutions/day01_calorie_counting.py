@@ -1,21 +1,18 @@
 # Day 1: Calorie Counting
 # https://adventofcode.com/2022/day/1
 
-def readfile():
-    with open("input/day01_input.txt") as f:
-        lines = f.readlines()
-    return lines
+from util.input_util import read_input_file
 
 
-def solution_part1():
-    lines = readfile()
+def solution1():
+    lines = read_input_file(1)
 
     max_total = 0
     curr_total = 0
 
     for l in lines:
         # new line case
-        if l == '\n':
+        if l == '':
             # update totals
             max_total = max(max_total, curr_total)
             curr_total = 0
@@ -26,13 +23,13 @@ def solution_part1():
     return max(max_total, curr_total)
             
 
-def solution_part1_b():
-    lines = readfile()
+def solution1b():
+    lines = read_input_file(1)
     
     curr_total = 0
     totals = []
     for l in lines:
-        if l == '\n':
+        if l == '':
             totals.append(curr_total)
             curr_total = 0
         else:
@@ -44,13 +41,13 @@ def solution_part1_b():
     return totals[-1]
     
 
-def solution_part2():
-    lines = readfile()
+def solution2():
+    lines = read_input_file(1)
     
     curr_total = 0
     totals = []
     for l in lines:
-        if l == '\n':
+        if l == '':
             totals.append(curr_total)
             curr_total = 0
         else:
@@ -65,8 +62,8 @@ def solution_part2():
             
             
 if __name__ == '__main__':
-    print(solution_part1())
+    print(solution1())
     
     print("------")
     
-    print(solution_part2())
+    print(solution2())
