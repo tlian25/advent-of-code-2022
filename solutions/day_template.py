@@ -1,9 +1,7 @@
 # Day 
-# https://adventofcode.com/2022/day/6
+# https://adventofcode.com/2022/day/
 
 from util.input_util import read_input_file
-
-
 
 
 def solution1():
