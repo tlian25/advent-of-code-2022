@@ -1,6 +1,10 @@
 # Day 9. Rope Bridge 
 # https://adventofcode.com/2022/day/9
 
+
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle, Circle
+from PIL import Image
 from util.input_util import read_input_file
 
 dir_map = {'L': (-1, 0), 'R': (1, 0), 'U': (0, 1), 'D': (0, -1)}
@@ -91,6 +95,7 @@ def get_tail_positions(positions) -> list:
             
     return visited
 
+
 def solution1():
     # H and T must always be touching
     # Diagonal and overalapping both count as touching
@@ -110,14 +115,59 @@ def solution2():
         positions = get_tail_positions(positions)
     
     uniq_visited = set(positions)
-    return len(uniq_visited)        
+    return len(uniq_visited)
 
+
+
+#### Some extra code to create a mini movie of rope movements
+    
+def solution2_to_images():
+
+    head_positions = get_head_positions()
+    positions = [head_positions]
 
     
+    for i in range(1, 10):
+        positions.append(get_tail_positions(positions[i-1]))
+        
+    xs = [abs(p[0]) for p in head_positions]
+    ys = [abs(p[1]) for p in head_positions]
     
+    S = max(max(xs), max(ys))
+    
+    tail_visited = set()
+    
+    WIDTH = 640
+    HEIGHT = 480
+    
+    frame = 0
+    for step in range(0, len(head_positions), 10):
+        if step % 100 == 0:
+            print(step)
+        
+        # PLT method
+        fig, ax = plt.subplots()
+        ax.set_xlim([-S, S])
+        ax.set_ylim([-S, S])
+        for knot in range(len(positions)):
+            color = (0, 0, (15-knot) / 20)
+            ax.add_patch(Rectangle(positions[knot][step], 5, 5, color = color))
+            
+        
+        for t in tail_visited:
+            ax.add_patch(Circle(t, 2, color = 'green'))
+        
+        tail_visited.add(positions[-1][step])
+        
+        plt.savefig(f'images/image_{str(frame).zfill(8)}.png')
+        plt.close()
+        frame += 1
+        
 
-
-
+        
+            
+            
+    
 
                 
     
@@ -128,3 +178,5 @@ if __name__ == '__main__':
     print('--------------')
     
     print(solution2())
+    
+    #solution2_to_images()
