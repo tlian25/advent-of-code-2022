@@ -3,13 +3,17 @@
 
 from util.input_util import read_input_file
 
+def parse_lines():
+    lines = read_input_file(0)
+
+
 
 def solution1():
-    lines = read_input_file(0)
+    pass
     
     
 def solution2():
-    lines = read_input_file(0)
+    pass
     
     
     
