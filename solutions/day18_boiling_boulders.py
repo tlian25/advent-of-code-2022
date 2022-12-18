@@ -36,6 +36,7 @@ def solution1():
 
 
 def get_limits(cubes):
+    # Get maxes. Mins known to be 0
     mx, my, mz = 0, 0, 0
     for x, y, z in cubes:
         mx = max(mx, x)
@@ -43,54 +44,6 @@ def get_limits(cubes):
         mz = max(mz, z)
     return mx+1, my+1 , mz+1
 
-
-def is_external(side, cubes, X, Y, Z):
-    # Look in all 6 directions to see if we hit the outer limit
-    # If we hit a cube before hitting the outside in all 6 directions, we know this is not external
-    x, y, z = side
-    external = True
-    for nx in range(x-1, -2, -1):
-        if (nx, y, z) in cubes:
-            external = False
-            break
-    if external: return True
-    
-    external = True
-    for nx in range(x+1, X):
-        if (nx, y, z) in cubes:
-            external = False
-            break
-    if external: return True
-        
-    external = True
-    for ny in range(y-1, -2, -1):
-        if (x, ny, z) in cubes:
-            external = False
-            break
-    if external: return True
-    
-    external = True
-    for ny in range(y+1, Y):
-        if (x, ny, z) in cubes:
-            external = False
-            break
-    if external: return True
-    
-    external = True
-    for nz in range(z-1, -2, -1):
-        if (x, y, nz) in cubes:
-            external = False
-            break
-    if external: return True
-    
-    external = True
-    for nz in range(z+1, Z):
-        if (x, y, nz) in cubes:
-            external = False
-            break
-    
-    return external
-    
 
 def build_outer_shell(cubes, X, Y, Z):
     shell = set()
@@ -122,15 +75,11 @@ def solution2():
     shell = build_outer_shell(cubes, X, Y, Z)
     sides = get_sides(shell)
     # Filter out sides that are on the outer part of the shell.
+    # Only count a side if there's a lava cube on the other side.
     count = 0
     for x, y, z in sides:
-        if x <= -1 or x >= 21:
-            continue
-        if y <= -1 or y >= 21:
-            continue
-        if z <= -1 or z >= 21:
-            continue
-        count += 1
+        if (x, y, z) in cubes:
+            count += 1
     
     return count
     
